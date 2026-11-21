@@ -1,0 +1,14 @@
+{
+  "name": "comprefacil-microsservicos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Desafio 2 de Desenvolvimento de Sistemas Distribuídos: pagamento e notificação com RabbitMQ",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test:e2e": "node --test e2e/payment-flow.test.mjs",
+    "test:resilience": "node --test --test-concurrency=1 e2e/resilience.test.mjs",
+    "demo": "node scripts/demo.mjs"
+  }
+}

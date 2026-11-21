@@ -1,0 +1,34 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum NotificationType {
+  PAYMENT_REQUESTED
+  PAYMENT_CONFIRMED
+}
+
+enum NotificationChannel {
+  EMAIL
+}
+
+model Notification {
+  id        String              @id @default(uuid()) @db.Uuid
+  eventId   String              @unique @map("event_id") @db.Uuid
+  paymentId String              @map("payment_id") @db.Uuid
+  orderId   String              @map("order_id")
+  type      NotificationType
+  channel   NotificationChannel @default(EMAIL)
+  recipient String
+  subject   String
+  message   String
+  sentAt    DateTime            @default(now()) @map("sent_at")
+
+  @@index([paymentId, sentAt])
+  @@map("notifications")
+}
